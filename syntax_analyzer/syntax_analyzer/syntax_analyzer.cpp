@@ -60,16 +60,17 @@
 #include<map>
 using namespace std;
 
-string filename = "C:/Users/Picasphere/source/repos/syntax_analyzer/syntax_analyzer/Debug/test.txt";
+
+string filename = "test.txt";
 
 int k = 0;
 map<string, int>Map;
 map<string, int>::iterator iter;
 
-string Key[100] = { "include","define","int","char","string","float","double","bool","true","false","if","else","while","for","default","do","public","static","return","switch","case","const" };//关键字字典
-string opr[100] = { "+","-","*","/","++","--","+=","-=","*=","/=","&","&&","|","||","!","==","!=","=",">",">=","<","<>","<=",">>","<<","?",":",":=" };//操作符字典
-char ilegal[100] = { '`' , '~' , '@' , '$' , '^' , '\\' };//非法字符字典
-char Sep[100] = { ',' , ';' , '{' , '}' , '(' , ')' , '[' , ']' , ' ' , '\n' , '\t' };//分隔符字典
+string Key[100] = { "include","define","int","char","string","float","double","bool","true","false","if","else","while","for","default","do","public","static","return","switch","case","const" };
+string opr[100] = { "+","-","*","/","++","--","+=","-=","*=","/=","&","&&","|","||","!","==","!=","=",">",">=","<","<>","<=",">>","<<","?",":",":=" };
+char ilegal[100] = { '`' , '~' , '@' , '$' , '^' , '\\' };
+char Sep[100] = { ',' , ';' , '{' , '}' , '(' , ')' , '[' , ']' , ' ' , '\n' , '\t' };
 
 
 bool isKey(string s) {
@@ -82,6 +83,22 @@ bool isKey(string s) {
 }
 
 
+
+bool isAlpha(char ch) {//judge character
+    if (ch >= 'a' && ch <= 'z') {
+        return true;
+    }
+    if (ch >= 'A' && ch <= 'Z') {
+        return true;
+    }
+    return false;
+}
+
+bool isDigit(int ch) {
+    if (ch >= '0' && ch <= '9')
+        return true;
+    return false;
+}
 
 bool isOprStart(char ch) {
     for (int i = 0; i < 100; i++) {
@@ -117,10 +134,28 @@ bool ilegalchar(char ch) {
 }
 
 void printKEY(string s) {
+    //    int flag=1;
+    //    for(int i=0;i<100;i++){
+    //        if(Key[i]==s){
+    //            flag+=i;
+    //            break;
+    //        }
+    //    }
+    //    cout<<"<"<<flag<<" "<<s<<">"<<endl;
+
     cout << "<" << s << " -" << ">" << endl;
+    //    outFile<<"<"<< s << " -" <<">"<<endl;
 }
 
 void printOPR(string s) {
+    //    int flag=23;
+    //    for(int i=0;i<26;i++){
+    //        if(opr[i]==s){
+    //            flag+=i;
+    //            break;
+    //        }
+    //    }
+    //    cout<<"<"<<flag<<" "<<s<<">"<<endl;
     string t;
     if (s == "<") {
         t = "LT";
@@ -151,7 +186,15 @@ void printOPR(string s) {
 }
 
 void printSEP(char s) {
-
+    //    int flag=48;
+    //    for(int i=0;i<26;i++){
+    //        if(Sep[i]==s){
+    //            flag+=i;
+    //            break;
+    //        }
+    //    }
+    //    if(s!=' ')
+    //        cout<<"<"<<flag<<" "<<s<<">"<<endl;
     if (s != ' ') {
         cout << "<" << s << " -" << ">" << endl;
         //        outFile<<"<"<<s<<" -"<<">"<<endl;
@@ -230,7 +273,7 @@ int main() {
 
                 }
             }
-            while (isalpha(ch) && word != "include" && word != "define") {
+            while (isAlpha(ch) && word != "include" && word != "define") {
                 word.append(1, ch);
                 inFile.get(ch);
                 if (ch == '\n')
@@ -328,7 +371,7 @@ int main() {
 
                     }
                 }
-                while (isalpha(ch)) {
+                while (isAlpha(ch)) {
                     word.append(1, ch);
                     inFile.get(ch);
                     while (ilegalchar(ch)) {
@@ -366,7 +409,7 @@ int main() {
 
                     }
                 }
-                while (isdigit(ch)) {
+                while (isDigit(ch)) {
                     word.append(1, ch);
                     inFile.get(ch);
                     if (ch == '\n')
@@ -391,7 +434,7 @@ int main() {
                 continue;
             }
         }//if(ch == "#")
-        else if (isalpha(ch) || ch == '_') {
+        else if (isAlpha(ch) || ch == '_') {
             while (!isSep(ch) && !isOprStart(ch)) {
                 word.append(1, ch);
                 inFile.get(ch);
@@ -432,7 +475,7 @@ int main() {
             }
             continue;
         }
-        else if (isdigit(ch)) {
+        else if (isDigit(ch)) {
             while (!isSep(ch) && !isOprStart(ch)) {
                 word.append(1, ch);
                 inFile.get(ch);
@@ -459,7 +502,7 @@ int main() {
             int point_num = 0;
             for (int i = 0; i < word.length(); i++) {
                 //if((word[i]>'9'||word[i]<'0')&&word[i]!='.'){
-//                if(isalpha(word[i])){
+//                if(isAlpha(word[i])){
 //                    errflag=1;
 //                    cout<<line_cnt<<"行词法错误，变量名"<<word<<"以数字开头"<<endl;
 //                    break;
@@ -491,7 +534,7 @@ int main() {
                         break;
                     }
                 }
-                if (isalpha(word[i])) {
+                if (isAlpha(word[i])) {
                     if (word[i] == 'e') {
                         if (i == word.length() - 1) {
                             errflag = 1;
@@ -503,7 +546,7 @@ int main() {
                                 cout << line_cnt << "行科学记数法e后没有数" << endl;
                         }
                         for (int j = i + 1; j < word.length(); j++) {
-                            if (word[j] == '.' || isalpha(word[j])) {
+                            if (word[j] == '.' || isAlpha(word[j])) {
                                 if (ch == '\n') {
                                     cout << line_cnt - 1 << "行科学记数法e后表示错误" << endl;
                                 }
@@ -674,4 +717,3 @@ int main() {
         iter++;
     }
 }
-
