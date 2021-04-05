@@ -1,0 +1,4 @@
+﻿  syntax_analyzer.cpp
+C:\Users\Picasphere\source\repos\syntax_analyzer\syntax_analyzer\syntax_analyzer\syntax_analyzer.cpp(460,31): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\Picasphere\source\repos\syntax_analyzer\syntax_analyzer\syntax_analyzer\syntax_analyzer.cpp(505,47): warning C4018: “<”: 有符号/无符号不匹配
+  syntax_analyzer.vcxproj -> C:\Users\Picasphere\source\repos\syntax_analyzer\syntax_analyzer\Debug\syntax_analyzer.exe
